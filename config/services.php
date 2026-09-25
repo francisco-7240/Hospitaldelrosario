@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'page_id' => env('FACEBOOK_PAGE_ID'),
+        'access_token' => env('FACEBOOK_PAGE_ACCESS_TOKEN'),
+        'graph_url' => env('FACEBOOK_GRAPH_URL', 'https://graph.facebook.com/v23.0'),
+        'posts_limit' => (int) env('FACEBOOK_POSTS_LIMIT', 3),
+    ],
+
 ];

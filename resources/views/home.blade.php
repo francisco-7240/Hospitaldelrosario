@@ -4,7 +4,7 @@
         @include('partials.header')
 
         <title>{{ config('app.name', 'Hospital del Rosario') }}</title>
-        <link rel="preload" as="image" href="{{ asset('storage/optimized/DSC_0057-scaled.webp') }}" fetchpriority="high">
+        <link rel="preload" as="image" href="{{ asset('storage/favicon.svg') }}" fetchpriority="high">
     </head>
     <body @class(['min-h-screen', 'bg-white', 'text-dark'])>
         @include('partials.hospital-header')
@@ -304,55 +304,35 @@
             >
                 <div @class(['mx-auto', 'max-w-7xl'])>
                     <div @class(['mx-auto', 'max-w-2xl', 'text-center'])>
-                        <h2 id="services-title" @class(['text-4xl', 'font-black', 'text-[#008f4c]', 'sm:text-5xl'])>
-                            Nuestros Servicios
-                        </h2>
-                        <p @class(['mt-4', 'text-sm', 'leading-relaxed', 'text-slate-800', 'sm:text-base'])>
-                            Contamos con servicios médicos integrales para atender todas tus necesidades de salud.
-                        </p>
+                        <h2 id="services-title" @class(['text-4xl', 'font-black', 'text-[#008f4c]', 'sm:text-5xl'])>Nuestros Servicios</h2>
+                        <p @class(['mt-4', 'text-sm', 'leading-relaxed', 'text-slate-800', 'sm:text-base'])>Contamos con servicios médicos integrales para atender todas tus necesidades de salud.</p>
                     </div>
 
                     <div @class(['relative', 'mt-10'])>
-                        <button
-                            type="button"
-                            @click="previous()"
-                            title="Servicios anteriores"
-                            aria-label="Servicios anteriores"
-                            @class(['absolute', 'left-0', 'top-1/2', 'z-10', '-translate-x-1/2', '-translate-y-1/2', 'text-5xl', 'leading-none', 'text-[#008f4c]', 'transition', 'hover:scale-110', 'sm:-translate-x-3/4'])
-                        >
-                            &lsaquo;
-                        </button>
-
+                        <button type="button" @click="previous()" title="Servicios anteriores" aria-label="Servicios anteriores" @class(['absolute', 'left-0', 'top-1/2', 'z-10', '-translate-x-1/2', '-translate-y-1/2', 'text-5xl', 'leading-none', 'text-[#008f4c]', 'transition', 'hover:scale-110', 'sm:-translate-x-3/4'])>&lsaquo;</button>
                         <div @class(['overflow-hidden', 'px-1', 'py-2'])>
-                            <div
-                                @class(['flex', 'gap-3', 'transition-transform', 'duration-500', 'ease-out', 'sm:gap-4'])
-                                :style="`transform: translateX(calc(-${current} * (100% + ${window.innerWidth < 640 ? 12 : 16}px) / ${visible}))`"
-                            >
+                            <div @class(['flex', 'gap-3', 'transition-transform', 'duration-500', 'ease-out', 'sm:gap-4']) :style="`transform: translateX(calc(-${current} * (100% + ${window.innerWidth < 640 ? 12 : 16}px) / ${visible}))`">
                                 <template x-for="service in services" :key="service.title">
-                                    <a
-                                        href="#agendar"
-                                        @class(['block', 'min-w-0', 'flex-[0_0_100%]', 'overflow-hidden', 'rounded-2xl', 'bg-white', 'shadow-[0_5px_15px_rgba(0,0,0,0.15)]', 'transition', 'hover:-translate-y-1', 'sm:flex-[0_0_calc(50%_-_8px)]', 'lg:flex-[0_0_calc(25%_-_12px)]'])
-                                    >
-                                        <img
-                                            :src="service.image"
-                                            :alt="service.title"
-                                            loading="lazy"
-                                            decoding="async"
-                                            @class(['h-40', 'w-full', 'object-cover', 'sm:h-44'])
-                                        >
+                                    <a href="#agendar" @class(['block', 'min-w-0', 'flex-[0_0_100%]', 'overflow-hidden', 'rounded-2xl', 'bg-white', 'shadow-[0_5px_15px_rgba(0,0,0,0.15)]', 'transition', 'hover:-translate-y-1', 'sm:flex-[0_0_calc(50%_-_8px)]', 'lg:flex-[0_0_calc(25%_-_12px)]'])>
+                                        <img :src="service.image" :alt="service.title" loading="lazy" decoding="async" @class(['h-40', 'w-full', 'object-cover', 'sm:h-44'])>
                                         <h3 @class(['flex', 'min-h-14', 'items-center', 'justify-center', 'px-3', 'py-3', 'text-center', 'text-lg', 'font-bold', 'leading-tight', 'text-slate-950']) x-text="service.title"></h3>
                                     </a>
                                 </template>
                             </div>
                         </div>
+                        <button type="button" @click="next()" title="Siguientes servicios" aria-label="Siguientes servicios" @class(['absolute', 'right-0', 'top-1/2', 'z-10', 'translate-x-1/2', '-translate-y-1/2', 'text-5xl', 'leading-none', 'text-[#008f4c]', 'transition', 'hover:scale-110', 'sm:translate-x-3/4'])>&rsaquo;</button>
+                    </div>
 
-                        <button
-                            type="button"
-                            @click="next()"
-                            title="Siguientes servicios"
-                            aria-label="Siguientes servicios"
-                            @class(['absolute', 'right-0', 'top-1/2', 'z-10', 'translate-x-1/2', '-translate-y-1/2', 'text-5xl', 'leading-none', 'text-[#008f4c]', 'transition', 'hover:scale-110', 'sm:translate-x-3/4'])
-                        >
+                    <div @class(['mt-7', 'flex', 'items-center', 'justify-between', 'gap-4'])>
+                        <div @class(['flex', 'items-center', 'gap-1.5']) aria-label="Páginas de servicios">
+                            <template x-for="page in maxIndex + 1" :key="page">
+                                <button type="button" @click="current = page - 1" :aria-label="`Ir a la página ${page}`" :class="current === page - 1 ? 'h-3 w-7 rounded-full bg-[#008f4c]' : 'h-3 w-3 rounded-full bg-slate-300'"></button>
+                            </template>
+                        </div>
+                        <a href="#agendar" @class(['flex', 'items-center', 'gap-2', 'text-sm', 'font-bold', 'text-[#008f4c]', 'transition', 'hover:text-[#006b3d]', 'sm:text-base'])>Ver todos los servicios <span aria-hidden="true" @class(['text-2xl', 'leading-none'])>&rarr;</span></a>
+                    </div>
+                </div>
+            </section>
                             &rsaquo;
                         </button>
                     </div>
@@ -374,8 +354,80 @@
                     </div>
                 </div>
             </section>
-            <section @class(['bg-[#dcefe0]', 'px-4', 'py-12', 'sm:px-8', 'sm:py-16'])>
-        <div @class(['mx-auto', 'max-w-7xl'])>
+
+            <section @class(['bg-[#f1f3f4]', 'px-4', 'py-12', 'sm:px-8', 'sm:py-16']) aria-labelledby="news-section-title">
+                <div @class(['mx-auto', 'max-w-7xl'])>
+                    <div @class(['grid', 'grid-cols-1', 'gap-10', 'lg:grid-cols-3', 'lg:gap-16'])>
+                        <div>
+                            <div @class(['mb-5', 'flex', 'items-center', 'gap-3'])>
+                                <h2 id="news-section-title" @class(['shrink-0', 'text-2xl', 'font-bold', 'text-[#003b91]', 'sm:text-3xl'])>Últimas Noticias</h2>
+                                <span @class(['h-px', 'w-full', 'bg-[#003b91]']) aria-hidden="true"></span>
+                            </div>
+                            @if($noticias->isEmpty())
+                                <div @class(['flex', 'min-h-80', 'items-center', 'justify-center', 'rounded-2xl', 'bg-white', 'p-6', 'text-center', 'text-slate-600', 'shadow-sm'])>Aún no hay noticias publicadas.</div>
+                            @else
+                                @php($noticiaPrincipal = $noticias->first())
+                                <article @class(['overflow-hidden', 'rounded-2xl', 'bg-white', 'shadow-[0_8px_24px_rgba(0,0,0,0.1)]'])>
+                                    <a href="{{ route('noticias.show', $noticiaPrincipal) }}" @class(['group', 'block'])>
+                                        <div @class(['relative', 'h-80', 'overflow-hidden', 'sm:h-96'])>
+                                            <img src="{{ $noticiaPrincipal->imagen_url }}" alt="{{ $noticiaPrincipal->titulo }}" loading="lazy" @class(['h-full', 'w-full', 'object-cover', 'transition', 'duration-500', 'group-hover:scale-105'])>
+                                            <div @class(['absolute', 'inset-x-0', 'bottom-0', 'bg-gradient-to-t', 'from-black/80', 'to-transparent', 'px-5', 'pb-5', 'pt-20'])><h3 @class(['text-xl', 'font-bold', 'leading-tight', 'text-white'])>{{ $noticiaPrincipal->titulo }}</h3></div>
+                                        </div>
+                                    </a>
+                                    <div @class(['p-5'])>
+                                        <p @class(['line-clamp-3', 'text-sm', 'leading-relaxed', 'text-slate-600'])>{{ \Illuminate\Support\Str::limit(strip_tags($noticiaPrincipal->resumen ?? $noticiaPrincipal->contenido), 150) }}</p>
+                                        <a href="{{ route('noticias.show', $noticiaPrincipal) }}" @class(['mt-4', 'inline-flex', 'items-center', 'gap-2', 'font-bold', 'text-[#008f4c]', 'hover:text-[#006b3d]'])>Leer noticia <span aria-hidden="true">&rarr;</span></a>
+                                    </div>
+                                </article>
+                            @endif
+                        </div>
+                        <div>
+                            <div @class(['mb-5', 'flex', 'items-center', 'gap-3'])><h2 @class(['shrink-0', 'text-2xl', 'font-bold', 'text-[#003b91]', 'sm:text-3xl'])>En Redes</h2><span @class(['h-px', 'w-full', 'bg-[#003b91]']) aria-hidden="true"></span></div>
+                            <article @class(['overflow-hidden', 'rounded-2xl', 'bg-white', 'shadow-[0_8px_24px_rgba(0,0,0,0.1)]'])>
+                                <div @class(['relative', 'h-32', 'overflow-hidden'])>
+                                    <img src="{{ asset('storage/optimized/DSC_0077-scaled.webp') }}" alt="Hospital del Rosario" loading="lazy" @class(['h-full', 'w-full', 'object-cover'])>
+                                    <span @class(['absolute', 'right-4', 'top-4', 'flex', 'h-9', 'w-9', 'items-center', 'justify-center', 'rounded-full', 'bg-[#1877f2]', 'text-xl', 'font-bold', 'text-white']) aria-label="Facebook">f</span>
+                                </div>
+                                <div @class(['relative', '-mt-8', 'mx-4', 'rounded-t-2xl', 'bg-white', 'px-4', 'pt-4'])>
+                                    <div @class(['flex', 'items-center', 'gap-3'])>
+                                        <img src="{{ asset('storage/logohospital.webp') }}" alt="" @class(['h-14', 'w-14', 'rounded-full', 'border-4', 'border-white', 'bg-[#312783]', 'object-contain', 'shadow'])>
+                                        <div>
+                                            <h3 @class(['text-base', 'font-bold', 'leading-tight', 'text-slate-950'])>Hospital del Rosario</h3>
+                                            <p @class(['text-xs', 'text-slate-500'])>Publicaciones recientes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div @class(['divide-y', 'divide-slate-200'])>
+                                    @forelse($publicacionesFacebook as $publicacion)
+                                        <a href="{{ $publicacion['url'] }}" target="_blank" rel="noopener noreferrer" @class(['block', 'p-5', 'transition', 'hover:bg-slate-50'])>
+                                            @if($publicacion['image'])
+                                                <img src="{{ $publicacion['image'] }}" alt="" loading="lazy" @class(['mb-3', 'h-36', 'w-full', 'rounded-lg', 'object-cover'])>
+                                            @endif
+                                            <p @class(['line-clamp-3', 'text-sm', 'leading-relaxed', 'text-slate-700'])>{{ \Illuminate\Support\Str::limit($publicacion['message'], 180) }}</p>
+                                            <span @class(['mt-3', 'block', 'text-xs', 'font-bold', 'text-[#1877f2]'])>Ver publicación en Facebook &rarr;</span>
+                                        </a>
+                                    @empty
+                                        <div @class(['p-5'])>
+                                            <p @class(['text-sm', 'leading-relaxed', 'text-slate-600'])>Las publicaciones recientes aparecerán aquí.</p>
+                                            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" @class(['mt-5', 'flex', 'items-center', 'justify-center', 'gap-2', 'rounded-lg', 'bg-[#1877f2]', 'px-4', 'py-3', 'font-bold', 'text-white', 'transition', 'hover:bg-[#0d65d9]'])>
+                                                <span aria-hidden="true">f</span> Visitar Facebook
+                                            </a>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </article>
+                        </div>
+                        <div>
+                            <div @class(['mb-5', 'flex', 'items-center', 'gap-3'])><h2 @class(['shrink-0', 'text-2xl', 'font-bold', 'text-[#003b91]', 'sm:text-3xl'])>Infografías</h2><span @class(['h-px', 'w-full', 'bg-[#003b91]']) aria-hidden="true"></span></div>
+                            <a href="{{ $noticias->isNotEmpty() ? route('noticias.show', $noticias->first()) : route('noticias.index') }}" @class(['group', 'relative', 'block', 'overflow-hidden', 'rounded-2xl', 'bg-white', 'shadow-[0_8px_24px_rgba(0,0,0,0.1)]'])><div @class(['relative', 'h-[30rem]', 'overflow-hidden'])><img src="{{ $noticias->isNotEmpty() ? $noticias->first()->imagen_url : asset('storage/optimized/DSC_1001-scaled.webp') }}" alt="Información de salud del Hospital del Rosario" loading="lazy" @class(['h-full', 'w-full', 'object-cover', 'transition', 'duration-500', 'group-hover:scale-105'])><div @class(['absolute', 'inset-x-0', 'bottom-0', 'bg-gradient-to-t', 'from-[#003b91]/90', 'to-transparent', 'px-5', 'pb-6', 'pt-24'])><p @class(['text-lg', 'font-bold', 'text-white'])>Información para cuidar tu salud</p><span @class(['mt-2', 'inline-flex', 'items-center', 'gap-2', 'text-sm', 'font-bold', 'text-white'])>Ver más <span aria-hidden="true">&rarr;</span></span></div></div></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section @class(['hidden', 'bg-[#dcefe0]', 'px-4', 'py-12', 'sm:px-8', 'sm:py-16'])>
+
+                <div @class(['mx-auto', 'max-w-7xl'])>
             <div @class(['max-w-2xl'])>
                 <h1 @class(['text-4xl', 'font-black', 'text-[#008f4c]', 'sm:text-5xl'])>
                     Noticias
